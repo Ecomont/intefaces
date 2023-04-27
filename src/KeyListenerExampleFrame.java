@@ -1,11 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import javax.swing.ImageIcon;
-public class KeyListenerExampleFrame extends JFrame implements KeyListener, MouseListener {
+public class KeyListenerExampleFrame extends JFrame implements KeyListener, MouseListener, MouseMotionListener {
     JLabel label1;
     KeyListenerExampleFrame(){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -14,16 +11,18 @@ public class KeyListenerExampleFrame extends JFrame implements KeyListener, Mous
         this.setLayout(null);
         setVisible(true);
         label1= new JLabel();
-        label1.setSize(100,100);
+        label1.setSize(144,144);
         label1.setBackground(Color.BLUE);
         label1.setOpaque(true);
         add(label1);
-        ImageIcon icon= new ImageIcon();
+        ImageIcon icon= new ImageIcon("src/whtasapp.png");
 
 //add key and mouse listeners to the elements
         this.addKeyListener(this);
+        this.addMouseListener(this);
+        this.addMouseMotionListener(this);
         label1.addMouseListener(this);
-
+        label1.setIcon(icon);
 
     }
 
@@ -98,6 +97,10 @@ public class KeyListenerExampleFrame extends JFrame implements KeyListener, Mous
 
         }
     }
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        label1.setLocation(e.getXOnScreen(), e.getYOnScreen());
+    }
 
     @Override
     public void mouseExited(MouseEvent e) {
@@ -105,6 +108,11 @@ public class KeyListenerExampleFrame extends JFrame implements KeyListener, Mous
             label1.setBackground(Color.GRAY);
 
         }
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        label1.setLocation(e.getXOnScreen(), e.getYOnScreen());
     }
     //Override necessary methods for the interfaces here
 //make the label move as you move the arrow keys on the keyboard. Use e.getKeyCode()method of the event.
